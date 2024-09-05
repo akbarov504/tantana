@@ -22,4 +22,4 @@ if __name__ == "__main__":
     from routes.calendar_route import *
     from routes.notification_route import *
     # root.register_error_handler(404, page_not_found)
-    root.run(debug = True, port=8080)
+    root.run(debug = True, port=2222)
