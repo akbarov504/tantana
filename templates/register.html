@@ -11,7 +11,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-10 mx-auto" style="margin-top: 150px;">
-                    <h1 class="text-center" style="color: #52796F;">Register</h1>
+                    <h1 class="text-center" style="color: #52796F;">Рўйхатдан ўтиш</h1>
                     <form method="post">
                         {{ form.hidden_tag() }}
                         <div class="form-group mt-4">
@@ -28,6 +28,10 @@
                             </div>
                         </div>
                         <div class="form-group mt-4">
+                            {{ form.type.label(style="color: #52796F;") }}
+                            {{ form.type(class="list-group", style="box-shadow: none !important;list-style: none;") }}
+                        </div>
+                        <div class="form-group mt-4">
                             {{ form.password.label(style="color: #52796F;") }}
                             {{ form.password(class="form-control", style="box-shadow: none !important;") }}
                             <div class="invalid-feedback">
@@ -37,7 +41,7 @@
                             </div>
                         </div>
                         {{ form.submit(class='btn btn-primary w-100 mt-2 pt-2 pb-2', style='background-color: #52796F; outline: none !important; box-shadow: none !important; border: 0; font-size: 20px;') }}
-                        <p class="text-center mt-2" style="color: #52796F;">All ready have an account?  <a style="text-decoration: none; color: #52796F; font-weight: bold;" href="{{ url_for('login_page') }}">Login</a></p>
+                        <p class="text-center mt-2" style="color: #52796F;">Аккаунтингиз бормиди?  <a style="text-decoration: none; color: #52796F; font-weight: bold;" href="{{ url_for('login_page') }}">Кириш</a></p>
                       </form>
                 </div>
             </div>

@@ -2,6 +2,7 @@ import os
 from app import root
 from models import models
 from forms.profile_category_form import ProfileCategoryForm
+from forms.profile_form import ProfileForm
 from forms.respublika_form import RespublikaForm
 from forms.viloyat_form import ViloyatForm
 from forms.tuman_form import TumanForm
@@ -31,7 +32,7 @@ def admin_category_list_page() -> render_template:
         respublika_l = models.Respublika.query.filter_by(is_deleted=False).all()
         viloyat_l = models.Viloyat.query.filter_by(is_deleted=False).all()
         tuman_l = models.Tuman.query.filter_by(is_deleted=False).all()
-        category_l = models.ProfileCategory.query.filter_by(is_deleted=False).all()
+        category_l = models.ProfileCategory.query.filter_by(is_deleted=False).order_by(models.ProfileCategory.order).all()
         return render_template("admin-category-list.html", category_list=category_l, respublika_list=respublika_l, viloyat_list=viloyat_l, tuman_list=tuman_l)
     else:
         return redirect(url_for("home_page"))
@@ -45,14 +46,17 @@ def admin_category_update_page(id) -> render_template:
             category = models.ProfileCategory.query.filter_by(id=id, is_deleted=False).first()
             title = form.title.data
             description = form.description.data
+            order = form.order.data
             category.title = title
             category.description = description
+            category.order = order
             models.db.session.commit()
             return redirect(url_for("admin_category_list_page"))
         else:
             category = models.ProfileCategory.query.filter_by(id=id, is_deleted=False).first()
             form.title.data = category.title
             form.description.data = category.description
+            form.order.data = category.order
             respublika_l = models.Respublika.query.filter_by(is_deleted=False).all()
             viloyat_l = models.Viloyat.query.filter_by(is_deleted=False).all()
             tuman_l = models.Tuman.query.filter_by(is_deleted=False).all()
@@ -79,7 +83,8 @@ def admin_category_create_page() -> render_template:
         if form.validate_on_submit():
             title = form.title.data
             description = form.description.data
-            category = models.ProfileCategory(title, description, current_user.id)
+            order = form.order.data
+            category = models.ProfileCategory(title, description, order, current_user.id)
             models.db.session.add(category)
             models.db.session.commit()
             return redirect(url_for("admin_category_list_page"))
@@ -91,14 +96,29 @@ def admin_category_create_page() -> render_template:
     else:
         return redirect(url_for("home_page"))
 
+# profile
+@root.route("/admin/profile/list", methods=["GET", "POST"])
+@login_required
+def admin_profile_list_page() -> render_template:
+    if current_user.role == "ADMIN":
+        respublika_l = models.Respublika.query.filter_by(is_deleted=False).all()
+        viloyat_l = models.Viloyat.query.filter_by(is_deleted=False).all()
+        tuman_l = models.Tuman.query.filter_by(is_deleted=False).all()
+        profile_l = models.Profile.query.filter_by(is_deleted=False).order_by(models.Profile.id).all()
+        category_l = models.ProfileCategory.query.filter_by(is_deleted=False).all()
+        user_l = models.User.query.filter_by(is_deleted=False).all()
+        return render_template("admin-profile-list.html", user_list=user_l, category_list=category_l, profile_list=profile_l, respublika_list=respublika_l, viloyat_list=viloyat_l, tuman_list=tuman_l)
+    else:
+        return redirect(url_for("home_page"))
+
 # respublika
 @root.route("/admin/respublika/list", methods=["GET", "POST"])
 @login_required
 def admin_respublika_list_page() -> render_template:
     if current_user.role == "ADMIN":
-        respublika_l = models.Respublika.query.filter_by(is_deleted=False).all()
-        viloyat_l = models.Viloyat.query.filter_by(is_deleted=False).all()
-        tuman_l = models.Tuman.query.filter_by(is_deleted=False).all()
+        respublika_l = models.Respublika.query.filter_by(is_deleted=False).order_by(models.Respublika.id).all()
+        viloyat_l = models.Viloyat.query.filter_by(is_deleted=False).order_by(models.Viloyat.id).all()
+        tuman_l = models.Tuman.query.filter_by(is_deleted=False).order_by(models.Tuman.id).all()
         return render_template("admin-respublika-list.html", respublika_list=respublika_l, viloyat_list=viloyat_l, tuman_list=tuman_l)
     else:
         return redirect(url_for("home_page"))
@@ -159,9 +179,9 @@ def admin_respublika_create_page() -> render_template:
 @login_required
 def admin_viloyat_list_page() -> render_template:
     if current_user.role == "ADMIN":
-        respublika_l = models.Respublika.query.filter_by(is_deleted=False).all()
-        viloyat_l = models.Viloyat.query.filter_by(is_deleted=False).all()
-        tuman_l = models.Tuman.query.filter_by(is_deleted=False).all()
+        respublika_l = models.Respublika.query.filter_by(is_deleted=False).order_by(models.Respublika.id).all()
+        viloyat_l = models.Viloyat.query.filter_by(is_deleted=False).order_by(models.Viloyat.id).all()
+        tuman_l = models.Tuman.query.filter_by(is_deleted=False).order_by(models.Tuman.id).all()
         return render_template("admin-viloyat-list.html", respublika_list=respublika_l, viloyat_list=viloyat_l, tuman_list=tuman_l)
     else:
         return redirect(url_for("home_page"))
@@ -243,9 +263,9 @@ def admin_viloyat_create_page() -> render_template:
 @login_required
 def admin_tuman_list_page() -> render_template:
     if current_user.role == "ADMIN":
-        respublika_l = models.Respublika.query.filter_by(is_deleted=False).all()
-        viloyat_l = models.Viloyat.query.filter_by(is_deleted=False).all()
-        tuman_l = models.Tuman.query.filter_by(is_deleted=False).all()
+        respublika_l = models.Respublika.query.filter_by(is_deleted=False).order_by(models.Respublika.id).all()
+        viloyat_l = models.Viloyat.query.filter_by(is_deleted=False).order_by(models.Viloyat.id).all()
+        tuman_l = models.Tuman.query.filter_by(is_deleted=False).order_by(models.Tuman.id).all()
         return render_template("admin-tuman-list.html", respublika_list=respublika_l, viloyat_list=viloyat_l, tuman_list=tuman_l)
     else:
         return redirect(url_for("home_page"))
@@ -468,15 +488,40 @@ def admin_slider_create_page() -> render_template:
     else:
         return redirect(url_for("home_page"))
 
-# user
-@root.route("/admin/user/list", methods=["GET", "POST"])
+# client
+@root.route("/admin/client/list", methods=["GET", "POST"])
 @login_required
-def admin_user_list_page() -> render_template:
+def admin_client_list_page() -> render_template:
     if current_user.role == "ADMIN":
-        user_l = models.User.query.filter_by(is_deleted=False).all()
+        user_l = models.User.query.filter_by(type='Client', is_deleted=False).order_by(models.User.id).all()
         respublika_l = models.Respublika.query.filter_by(is_deleted=False).all()
         viloyat_l = models.Viloyat.query.filter_by(is_deleted=False).all()
         tuman_l = models.Tuman.query.filter_by(is_deleted=False).all()
         return render_template("admin-user-list.html", user_list=user_l, respublika_list=respublika_l, viloyat_list=viloyat_l, tuman_list=tuman_l)
+    else:
+        return redirect(url_for("home_page"))
+
+# employee
+@root.route("/admin/employee/list", methods=["GET", "POST"])
+@login_required
+def admin_employee_list_page() -> render_template:
+    if current_user.role == "ADMIN":
+        user_l = models.User.query.filter_by(type='Employee', is_deleted=False).order_by(models.User.id).all()
+        respublika_l = models.Respublika.query.filter_by(is_deleted=False).all()
+        viloyat_l = models.Viloyat.query.filter_by(is_deleted=False).all()
+        tuman_l = models.Tuman.query.filter_by(is_deleted=False).all()
+        return render_template("admin-user-list.html", user_list=user_l, respublika_list=respublika_l, viloyat_list=viloyat_l, tuman_list=tuman_l)
+    else:
+        return redirect(url_for("home_page"))
+
+# user block
+@root.route("/admin/user/block/<id>", methods=["GET", "POST"])
+@login_required
+def admin_user_block_page(id: int) -> render_template:
+    if current_user.role == "ADMIN":
+        user = models.User.query.filter_by(id=id, is_deleted=False).first()
+        user.is_blocked = not user.is_blocked
+        models.db.session.commit()
+        return redirect(url_for("admin_page"))
     else:
         return redirect(url_for("home_page"))

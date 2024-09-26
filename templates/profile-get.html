@@ -6,59 +6,170 @@ Profile Get Page
 <section class="box">
     <div class="container-fluid">
         <div class="row w-100 ml-lg-0 ml-1">
-            <div class="profile-get-karousel-box col-lg-8 col-12 mt-5 p-0 ml-lg-5 ml-0">
-                <!-- <div id="carouselExampleControls" class="carousel slide w-100 h-75" data-ride="carousel">
-                    <div class="carousel-inner w-100 h-100">
-                        {% for pro in profile_images %}
-                        {% if p_count == pro.id %}
-                        <div class="carousel-item active w-100 h-100">
-                            <img class="d-block w-100 h-100" src="{{ url_for('static', filename=pro.image) }}"
-                                alt="First slide">
-                        </div>
-                        {% else %}
-                        <div class="carousel-item w-100 h-100">
-                            <img class="d-block w-100 h-100" src="{{ url_for('static', filename=pro.image) }}"
-                                alt="First slide">
-                        </div>
-                        {% endif %}
-                        {% endfor %}
-                    </div>
-                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div> -->
-                <div id="owl-demo" class="owl-carousel owl-theme w-100 h-75">
-                    {% for pro in profile_images %}
-                    {% if p_count == pro.id %}
-                    <div class="item w-100 h-100">
-                        <img src="{{ url_for('static', filename=pro.image) }}" width="100%" height="300px"
-                            alt="Owl Image">
+            <div class="profile-get-karousel-box col-lg-8 col-12 mt-5 p-0 ml-lg-5 ml-0" style="height: 115vh;">
+                <form method="post" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
+                    {% if profile.created_by == current_user.id %}
+                    <div class="p-0" style="width: 320px; height: 220px; outline: 2px solid #52796F; outline-offset: 10px;">
+                        <label for="image" class="m-0 h-100 pointer w-100">
+                            <img class="d-block w-100 h-100" src="{{ url_for('static', filename=profile.image) }}" alt="image">
+                        </label>
+                        {{ form.image(class="form-control", id="image", style="box-shadow: none !important; display: none;") }}
                     </div>
                     {% else %}
-                    <div class="item w-100 h-100">
-                        <img src="{{ url_for('static', filename=pro.image) }}" width="100%" height="300px"
-                            alt="Owl Image">
+                    <div class="p-0" style="width: 320px; height: 220px;">
+                        <img class="d-block w-100 h-100" src="{{ url_for('static', filename='/uploads/profile_image.jpg') }}" alt="First image" style="outline: 2px solid #52796F; outline-offset: 10px;">
                     </div>
                     {% endif %}
-                    {% endfor %}
-                </div>
-                <h3 class="profile-get-box-title mt-3">{{ profile.title }}</h3>
-                <p class="profile-get-box-description">{{ profile.description }}</p>
+                
+                    <div class="d-flex flex-wrap mt-5" style="gap: 35px;">
+                        {% if profile.created_by == current_user.id %}
+                        <div class="p-0" style="width: 220px; height: 170px; outline: 2px solid #52796F; outline-offset: 10px;">
+                            <label for="image-0" class="m-0 h-100 pointer w-100">
+                                <img class="d-block w-100 h-100" src="{{ url_for('static', filename=profile_images[0].image) }}" alt="First image">
+                            </label>
+                            {{ form.img1(class="form-control", id="image-0", style="box-shadow: none !important; display: none;") }}
+                        </div>
+                        {% else %}
+                        <div class="p-0" style="width: 220px; height: 170px;">
+                            <img class="d-block w-100 h-100" src="{{ url_for('static', filename=profile_images[0].image) }}" alt="First image" style="outline: 2px solid #52796F; outline-offset: 10px;">
+                        </div>
+                        {% endif %}
+                        
+                        {% if profile.created_by == current_user.id %}
+                        <div class="p-0" style="width: 220px; height: 170px; outline: 2px solid #52796F; outline-offset: 10px;">
+                            <label for="image-1" class="m-0 h-100 w-100 pointer">
+                                <img class="d-block w-100 h-100" src="{{ url_for('static', filename=profile_images[1].image) }}" alt="First image">
+                            </label>
+                            {{ form.img2(class="form-control", id="image-1", style="box-shadow: none !important; display: none;") }}
+                        </div>
+                        {% else %}
+                        <div class="p-0" style="width: 220px; height: 170px;">
+                            <img class="d-block w-100 h-100" src="{{ url_for('static', filename=profile_images[1].image) }}" alt="First image" style="outline: 2px solid #52796F; outline-offset: 10px;">
+                        </div>
+                        {% endif %}
+                        
+                        {% if profile.created_by == current_user.id %}
+                        <div class="p-0" style="width: 220px; height: 170px; outline: 2px solid #52796F; outline-offset: 10px;">
+                            <label for="image-2" class="m-0 h-100 w-100 pointer">
+                                <img class="d-block w-100 h-100" src="{{ url_for('static', filename=profile_images[2].image) }}" alt="First image">
+                            </label>
+                            {{ form.img3(class="form-control", id="image-2", style="box-shadow: none !important; display: none;") }}
+                        </div>
+                        {% else %}
+                        <div class="p-0" style="width: 220px; height: 170px;">
+                            <img class="d-block w-100 h-100" src="{{ url_for('static', filename=profile_images[2].image) }}" alt="First image" style="outline: 2px solid #52796F; outline-offset: 10px;">
+                        </div>
+                        {% endif %}
+                        
+                        {% if profile.created_by == current_user.id %}
+                        <div class="p-0" style="width: 220px; height: 170px; outline: 2px solid #52796F; outline-offset: 10px;">
+                            <label for="image-3" class="m-0 h-100 w-100 pointer">
+                                <img class="d-block w-100 h-100" src="{{ url_for('static', filename=profile_images[3].image) }}" alt="First image">
+                            </label>
+                            {{ form.img4(class="form-control", id="image-3", style="box-shadow: none !important; display: none;") }}
+                        </div>
+                        {% else %}
+                        <div class="p-0" style="width: 220px; height: 170px;">
+                            <img class="d-block w-100 h-100" src="{{ url_for('static', filename=profile_images[3].image) }}" alt="First image" style="outline: 2px solid #52796F; outline-offset: 10px;">
+                        </div>
+                        {% endif %}
+                        
+                        {% if profile.created_by == current_user.id %}
+                        <div class="p-0" style="width: 220px; height: 170px; outline: 2px solid #52796F; outline-offset: 10px;">
+                            <label for="image-4" class="m-0 h-100 w-100 pointer">
+                                <img class="d-block w-100 h-100" src="{{ url_for('static', filename=profile_images[4].image) }}" alt="First image">
+                            </label>
+                            {{ form.img5(class="form-control", id="image-4", style="box-shadow: none !important; display: none;") }}
+                        </div>
+                        {% else %}
+                        <div class="p-0" style="width: 220px; height: 170px;">
+                            <img class="d-block w-100 h-100" src="{{ url_for('static', filename=profile_images[4].image) }}" alt="First image" style="outline: 2px solid #52796F; outline-offset: 10px;">
+                        </div>
+                        {% endif %}
+        
+                        {% if profile.created_by == current_user.id %}
+                        <div class="p-0" style="width: 220px; height: 170px; outline: 2px solid #52796F; outline-offset: 10px;">
+                            <label for="image-5" class="m-0 h-100 w-100 pointer">
+                                <img class="d-block w-100 h-100" src="{{ url_for('static', filename=profile_images[5].image) }}" alt="First image">
+                            </label>
+                            {{ form.img6(class="form-control", id="image-5", style="box-shadow: none !important; display: none;") }}
+                        </div>
+                        {% else %}
+                        <div class="p-0" style="width: 220px; height: 170px;">
+                            <img class="d-block w-100 h-100" src="{{ url_for('static', filename=profile_images[5].image) }}" alt="First image" style="outline: 2px solid #52796F; outline-offset: 10px;">
+                        </div>
+                        {% endif %}
+                        
+                        {% if profile.created_by == current_user.id %}
+                        <div class="p-0" style="width: 220px; height: 170px; outline: 2px solid #52796F; outline-offset: 10px;">
+                            <label for="image-6" class="m-0 h-100 w-100 pointer">
+                                <img class="d-block w-100 h-100" src="{{ url_for('static', filename=profile_images[6].image) }}" alt="First image">
+                            </label>
+                            {{ form.img7(class="form-control", id="image-6", style="box-shadow: none !important; display: none;") }}
+                        </div>
+                        {% else %}
+                        <div class="p-0" style="width: 220px; height: 170px;">
+                            <img class="d-block w-100 h-100" src="{{ url_for('static', filename=profile_images[6].image) }}" alt="First image" style="outline: 2px solid #52796F; outline-offset: 10px;">
+                        </div>
+                        {% endif %}
+                        
+                        {% if profile.created_by == current_user.id %}
+                        <div class="p-0" style="width: 220px; height: 170px; outline: 2px solid #52796F; outline-offset: 10px;">
+                            <label for="image-7" class="m-0 w-100 h-100 pointer">
+                                <img class="d-block w-100 h-100" src="{{ url_for('static', filename=profile_images[7].image) }}" alt="First image">
+                            </label>
+                            {{ form.img8(class="form-control", id="image-7", style="box-shadow: none !important; display: none;") }}
+                        </div>
+                        {% else %}
+                        <div class="p-0" style="width: 220px; height: 170px;">
+                            <img class="d-block w-100 h-100" src="{{ url_for('static', filename=profile_images[7].image) }}" alt="First image" style="outline: 2px solid #52796F; outline-offset: 10px;">
+                        </div>
+                        {% endif %}
+                        
+                        {% if profile.created_by == current_user.id %}
+                        <div class="p-0" style="width: 220px; height: 170px; outline: 2px solid #52796F; outline-offset: 10px;">
+                            <label for="image-8" class="m-0 w-100 h-100 pointer">
+                                <img class="d-block w-100 h-100" src="{{ url_for('static', filename=profile_images[8].image) }}" alt="First image">
+                            </label>
+                            {{ form.img9(class="form-control", id="image-8", style="box-shadow: none !important; display: none;") }}
+                        </div>
+                        {% else %}
+                        <div class="p-0" style="width: 220px; height: 170px;">
+                            <img class="d-block w-100 h-100" src="{{ url_for('static', filename=profile_images[8].image) }}" alt="First image" style="outline: 2px solid #52796F; outline-offset: 10px;">
+                        </div>
+                        {% endif %}
+
+                        {% if profile.created_by == current_user.id %}
+                        <div class="p-0" style="width: 220px; height: 170px; outline: 2px solid #52796F; outline-offset: 10px;">
+                            <label for="image-9" class="m-0 w-100 h-100 pointer">
+                                <img class="d-block w-100 h-100" src="{{ url_for('static', filename=profile_images[9].image) }}" alt="First image">
+                            </label>
+                            {{ form.img10(class="form-control", id="image-9", style="box-shadow: none !important; display: none;") }}
+                        </div>
+                        {% else %}
+                        <div class="p-0" style="width: 220px; height: 170px;">
+                            <img class="d-block w-100 h-100" src="{{ url_for('static', filename=profile_images[9].image) }}" alt="First image" style="outline: 2px solid #52796F; outline-offset: 10px;">
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <h3 class="profile-get-box-title mt-4">{{ profile.title }}</h3>
+                    <p class="profile-get-box-description">{{ profile.description }}</p>
+                    <div class="form-group">
+                        {{ form.submit(class='btn btn-primary w-25 mt-2 pt-2 pb-2', style='background-color: #52796F; outline: none !important; box-shadow: none !important; border: 0; font-size: 20px;') }}
+                    </div>
+                </form>
             </div>
             <div class="profile-get-kalendar-box col-lg-3 col-12 ml-lg-4 ml-0 mt-lg-5 mt-0 p-0">
-                <div class="profile-get-kalendar w-100" style="height: 85%; border: 1px solid #52796f;">
+                <div class="profile-get-kalendar w-100" style="height: 45%; border: 1px solid #52796f;">
                     <div class="d-flex justify-content-between p-3">
                         <div>
                             <h3 id="month" style="color: #52796F;">{{ month_name }}</h3>
                         </div>
                         <div>
-                            <button onclick="changeMonthPrev()" type="button" class="btn"><</button>
-                            <button onclick="changeMonthNext()" type="button" class="btn">></button>
+                            <button onclick="changeMonthPrev()" type="button" class="btn" style="border: 1px solid #52796F; background-color: #f2f8ef;"><</button>
+                            <button onclick="changeMonthNext()" type="button" class="btn" style="border: 1px solid #52796F; background-color: #f2f8ef;">></button>
                         </div>
                     </div>
                     <div class="d-flex col-12 text-center">
@@ -66,9 +177,9 @@ Profile Get Page
                         <p style="width: 70px; color: #52796F;">Се</p>
                         <p style="width: 70px; color: #52796F;">Чо</p>
                         <p style="width: 70px; color: #52796F;">Па</p>
-                        <p style="width: 70px; color: #52796F;">Дж</p>
-                        <p style="width: 70px; color: red;">Ша</p>
-                        <p style="width: 70px; color: red;">Як</p>
+                        <p style="width: 70px; color: #52796F;">Жу</p>
+                        <p style="width: 70px; color: #52796F; font-weight: bold;">Ша</p>
+                        <p style="width: 70px; color: #52796F; font-weight: bold;">Як</p>
                     </div>
                     <div class="w-100 d-flex flex-wrap ml-2" id="calendar-box">
 

@@ -11,7 +11,7 @@ def home_page() -> render_template:
     respublika_l = models.Respublika.query.filter_by(is_deleted=False).all()
     viloyat_l = models.Viloyat.query.filter_by(is_deleted=False).all()
     tuman_l = models.Tuman.query.filter_by(is_deleted=False).all()
-    category_l = models.ProfileCategory.query.filter_by(is_deleted=False).all()
+    category_l = models.ProfileCategory.query.filter_by(is_deleted=False).order_by(models.ProfileCategory.order).all()
 
     for slayd in slayd_l:
         if slayd.id < slayd_count:

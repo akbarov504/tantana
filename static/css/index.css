@@ -2,6 +2,10 @@ body {
   background-color: #f2f8ef !important;
 }
 
+.pointer {
+  cursor:  pointer !important;
+}
+
 .box {
   width: 100%;
 }
@@ -127,7 +131,7 @@ body {
   display: block !important;
   position: absolute !important;
   will-change: transform !important;
-  transform: translate3d(-200px, 0px, 0px) !important;
+  transform: translate3d(-180px, 0px, 0px) !important;
 }
 
 #city-hover:hover #city-menu-hover {

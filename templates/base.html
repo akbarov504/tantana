@@ -36,44 +36,61 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
+          <li class="nav-item" style="width: 45px; height: 40px;">
             {% if current_user.is_authenticated %}
-            <a class="nav-link btn" href="{{ url_for('notification_list_page') }}">
-              <img src="{{ url_for('static', filename='img/Subtract.png') }}" alt="plus" width="30px" height="25px">
+            <a class="nav-link btn" href="{{ url_for('notification_list_page') }}"
+              style="width: 100%; height: 100%; padding: 0;">
+              <img src="{{ url_for('static', filename='img/Subtract.png') }}" alt="plus"
+                style="width: 100%; height: 100%;">
             </a>
             {% endif %}
           </li>
-          <li class="nav-item">
+          <li class="nav-item" style="width: 45px; height: 40px;">
             {% if current_user.is_authenticated %}
-            <a class="nav-link btn navbar-custom-btn" href="{{ url_for('profile_create_page') }}">
-              <img src="{{ url_for('static', filename='img/plus.png') }}" alt="plus" width="20px" height="20px">
+            {% if current_user.type == 'Employee' %}
+            <a class="nav-link btn navbar-custom-btn" href="{{ url_for('profile_create_page') }}"
+              style="width: 100%; height: 100%; padding: 0;">
+              <img src="{{ url_for('static', filename='img/plus.png') }}" alt="plus"
+                style="width: 60%; height: 60%; margin-top: 7px;">
             </a>
             {% else %}
-            <a class="nav-link btn navbar-custom-btn" href="{{ url_for('login_page') }}">
-              <img src="{{ url_for('static', filename='img/plus.png') }}" alt="plus" width="20px" height="20px">
+            <a class="nav-link btn navbar-custom-btn" href="{{ url_for('home_page') }}"
+            style="width: 100%; height: 100%; padding: 0;">
+            <img src="{{ url_for('static', filename='img/plus.png') }}" alt="plus"
+              style="width: 60%; height: 60%; margin-top: 7px;">
+          </a>
+            {% endif %}
+            {% else %}
+            <a class="nav-link btn navbar-custom-btn" href="{{ url_for('login_page') }}"
+              style="width: 100%; height: 100%; padding: 0;">
+              <img src="{{ url_for('static', filename='img/plus.png') }}" alt="plus"
+                style="width: 60%; height: 60%; margin-top: 7px;">
             </a>
             {% endif %}
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle navbar-custom-btn" href="#" id="navbarDropdown" role="button"
+          <li class="nav-item dropdown" style="width: 90px; height: 40px;">
+            <a class="nav-link dropdown-toggle navbar-custom-btn rounded" href="#" id="navbarDropdown" role="button"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Filter
+              Регион
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               {% for res in respublika_list %}
               <div class="dropdown-item" id="country-hover">
-                <a href="{{ url_for('profile_list_respublika_page', _respublika=res.text) }}" style="text-decoration: none; color: #52796f;">{{ res.text }}</a>
+                <a href="{{ url_for('profile_list_respublika_page', _respublika=res.text) }}"
+                  style="text-decoration: none; color: #52796f;">{{ res.text }}</a>
                 <div class="dropdown">
                   <div class="dropdown-menu" id="country-menu-hover">
                     {% for vil in viloyat_list %}
                     {% if vil.respublika_id == res.id %}
                     <div class="dropdown-item" id="city-hover">
-                      <a href="{{ url_for('profile_list_viloyat_page', _viloyat=vil.text) }}" style="text-decoration: none; color: #52796f;">{{ vil.text }}</a>
+                      <a href="{{ url_for('profile_list_viloyat_page', _viloyat=vil.text) }}"
+                        style="text-decoration: none; color: #52796f;">{{ vil.text }}</a>
                       <div class="dropdown">
                         <div class="dropdown-menu" id="city-menu-hover">
                           {% for tu in tuman_list %}
                           {% if tu.viloyat_id == vil.id %}
-                          <a class="dropdown-item" href="{{ url_for('profile_list_tuman_page', _tuman=tu.text) }}" style="text-decoration: none; color: #52796f;">{{ tu.text }}</a>
+                          <a class="dropdown-item" href="{{ url_for('profile_list_tuman_page', _tuman=tu.text) }}"
+                            style="text-decoration: none; color: #52796f;">{{ tu.text }}</a>
                           {% endif %}
                           {% endfor %}
                         </div>
@@ -87,24 +104,23 @@
               {% endfor %}
             </div>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle navbar-custom-btn" href="#" id="navbarDropdown" role="button"
+          <li class="nav-item dropdown" style="width: 65px; height: 40px;">
+            <a class="nav-link dropdown-toggle navbar-custom-btn rounded" href="#" id="navbarDropdown" role="button"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Ўзб
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="#">Рус</a>
-              <a class="dropdown-item" href="#">O‘zb</a>
               <a class="dropdown-item" href="#">Ўзб</a>
             </div>
           </li>
           {% if current_user.is_authenticated %}
-          <li class="nav-item">
-            <a class="nav-link btn navbar-custom-btn" href="{{ url_for('logout_page') }}">Logout</a>
+          <li class="nav-item" style="width: 70px; height: 40px;">
+            <a class="nav-link btn navbar-custom-btn" href="{{ url_for('logout_page') }}">Чиқиш</a>
           </li>
           {% else %}
-          <li class="nav-item">
-            <a class="nav-link btn navbar-custom-btn" href="{{ url_for('login_page') }}">Login</a>
+          <li class="nav-item" style="width: 70px; height: 40px;">
+            <a class="nav-link btn navbar-custom-btn" href="{{ url_for('login_page') }}">Кириш</a>
           </li>
           {% endif %}
         </ul>
@@ -116,31 +132,31 @@
 
     {% endblock %}
   </main>
-    <footer>
-      <section class="footer-box active mt-5">
-        <div class="open-icon active position-absolute">
-          <img src="{{ url_for('static', filename='img/up.svg') }}" width="24" height="24" alt="">
-        </div>
-        <div class="icons-box ml-4 mt-4 dis-none">
-          <a href="#">
-            <img src="{{ url_for('static', filename='img/tg.png') }}" alt="tg" width="40px" height="40px">
-          </a>
-          <a href="#">
-            <img src="{{ url_for('static', filename='img/insta.png') }}" alt="insta" width="40px" height="40px"
-              class="ml-3">
-          </a>
-          <a href="#">
-            <img src="{{ url_for('static', filename='img/fckb.png') }}" alt="fckb" width="40px" height="40px"
-              class="ml-3">
-          </a>
-        </div>
-        <div class="chat-box mt-3 mr-4 dis-none">
-          <a href="#">
-            <img src="{{ url_for('static', filename='img/chat.png') }}" alt="chat" width="60px" height="60px">
-          </a>
-        </div>
-      </section>
-    </footer>
+  <footer>
+    <section class="footer-box active mt-5">
+      <div class="open-icon active position-absolute">
+        <img src="{{ url_for('static', filename='img/up.svg') }}" width="24" height="24" alt="">
+      </div>
+      <div class="icons-box ml-4 mt-4 dis-none">
+        <a href="#">
+          <img src="{{ url_for('static', filename='img/tg.png') }}" alt="tg" width="40px" height="40px">
+        </a>
+        <a href="#">
+          <img src="{{ url_for('static', filename='img/insta.png') }}" alt="insta" width="40px" height="40px"
+            class="ml-3">
+        </a>
+        <a href="#">
+          <img src="{{ url_for('static', filename='img/fckb.png') }}" alt="fckb" width="40px" height="40px"
+            class="ml-3">
+        </a>
+      </div>
+      <div class="chat-box mt-3 mr-4 dis-none">
+        <a href="#">
+          <img src="{{ url_for('static', filename='img/chat.png') }}" alt="chat" width="60px" height="60px">
+        </a>
+      </div>
+    </section>
+  </footer>
 </body>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
   integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -155,9 +171,14 @@
   $(document).ready(function () {
     // $('[data-toggle="tooltip"]').tooltip();
     $("#owl-demo").owlCarousel({
-      autoPlay: 3000,
+      slideSpeed: 200,
+      paginationSpeed: 800,
+      autoPlay: true, // Autoplayni yoqamiz
+      autoPlayTimeout: 3000, // 3 soniya (3000 millisekund)
+      navigationText: ["prev","next"],
       items: 3,
-      itemsDesktop: [1199, 2],
+      goToFirstSpeed: 1000,
+      itemsDesktop: [1199, 1],
       itemsDesktopSmall: [979, 1]
     });
   });
@@ -165,11 +186,11 @@
   const openIcon = document.querySelector(".open-icon")
   const disNone = document.querySelectorAll(".dis-none")
   disNone.forEach((item) => item.style.display = "none")
-  
+
   openIcon?.addEventListener("click", () => {
     const footerBox = document.querySelector(".footer-box")
 
-    if (openIcon.classList.contains("active")) {      
+    if (openIcon.classList.contains("active")) {
       openIcon.innerHTML = `<img src="{{ url_for('static', filename='img/down.svg') }}" width="24" height="24" alt="">`
       disNone.forEach((item) => item.style.display = "block")
     } else {

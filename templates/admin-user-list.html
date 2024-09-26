@@ -9,8 +9,13 @@ Admin Page
             <div class="col-lg-3 col-12 saidbar ml-lg-0 ml-0 mt-lg-5 mt-2">
                 
                 <div class="btn-group dropright saidbar-item mt-1">
-                    <a href="{{ url_for('admin_user_list_page') }}" type="button" class="saidbar-item text-white btn">
-                        User
+                    <a href="{{ url_for('admin_client_list_page') }}" type="button" class="saidbar-item text-white btn">
+                        Client
+                    </a>
+                </div>
+                <div class="btn-group dropright saidbar-item mt-1">
+                    <a href="{{ url_for('admin_employee_list_page') }}" type="button" class="saidbar-item text-white btn">
+                        Employee
                     </a>
                 </div>
                 <div class="btn-group dropright saidbar-item mt-1">
@@ -26,6 +31,11 @@ Admin Page
                 <div class="btn-group dropright saidbar-item mt-1">
                     <a href="{{ url_for('admin_category_list_page') }}" type="button" class="saidbar-item text-white btn">
                         Category
+                    </a>
+                </div>
+                <div class="btn-group dropright saidbar-item mt-1">
+                    <a href="{{ url_for('admin_profile_list_page') }}" type="button" class="saidbar-item text-white btn">
+                        Profile
                     </a>
                 </div>
                 <div class="btn-group dropright saidbar-item mt-1">
@@ -51,20 +61,30 @@ Admin Page
                         <th>#</th>
                         <th>Full name</th>
                         <th>Phone</th>
+                        <th>Type</th>
                         <th>Password</th>
                         <th>Lang</th>
                         <th>Role</th>
                         <th>Created At</th>
+                        <th>Action</th>
                     </tr>
                     {% for user in user_list %}
                     <tr>
                         <th>{{ user.id }}</th>
                         <td>{{ user.full_name }}</td>
                         <td>{{ user.phone }}</td>
+                        <td>{{ user.type }}</td>
                         <td>{{ user.password }}</td>
                         <td>{{ user.lang }}</td>
                         <td>{{ user.role }}</td>
                         <td>{{ user.created_at }}</td>
+                        <td class="d-flex">
+                            {% if user.is_blocked %}
+                            <a href="{{ url_for('admin_user_block_page', id=user.id) }}" class="btn" style="background-color: #52796f; color: #f2f8ef;">Unblock</a>
+                            {% else %}
+                            <a href="{{ url_for('admin_user_block_page', id=user.id) }}" class="btn" style="background-color: #52796f; color: #f2f8ef;">Block</a>
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endfor %}
                   </table>

@@ -10,10 +10,11 @@ def register_page() -> render_template:
     if form.validate_on_submit():
         full_name = form.full_name.data
         phone = form.phone.data
+        type = form.type.data
         password = form.password.data
         user = models.User.query.filter_by(phone=phone, password=password, is_deleted=False).first()
         if user is None:
-            user = models.User(full_name, phone, password, 'UZ', 'USER', -1)
+            user = models.User(full_name, phone, type, password, 'UZ', 'USER', -1)
             models.db.session.add(user)
             models.db.session.commit()
             flash("Successfully registered!", category="success")
@@ -30,7 +31,7 @@ def login_page() -> render_template:
     if form.validate_on_submit():
         phone = form.phone.data
         password = form.password.data
-        user = models.User.query.filter_by(phone=phone, password=password, is_deleted=False).first()
+        user = models.User.query.filter_by(phone=phone, password=password, is_deleted=False, is_blocked=False).first()
         if user is None:
             flash("Username or Password are not match! Please try again!", category="danger")
             return render_template("login.html", form=form)

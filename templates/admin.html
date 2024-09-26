@@ -9,8 +9,13 @@ Admin Page
             <div class="col-lg-3 col-12 saidbar ml-lg-0 ml-0 mt-lg-5 mt-2">
                 
                 <div class="btn-group dropright saidbar-item mt-1">
-                    <a href="{{ url_for('admin_user_list_page') }}" type="button" class="saidbar-item text-white btn">
-                        User
+                    <a href="{{ url_for('admin_client_list_page') }}" type="button" class="saidbar-item text-white btn">
+                        Client
+                    </a>
+                </div>
+                <div class="btn-group dropright saidbar-item mt-1">
+                    <a href="{{ url_for('admin_employee_list_page') }}" type="button" class="saidbar-item text-white btn">
+                        Employee
                     </a>
                 </div>
                 <div class="btn-group dropright saidbar-item mt-1">
@@ -29,6 +34,11 @@ Admin Page
                     </a>
                 </div>
                 <div class="btn-group dropright saidbar-item mt-1">
+                    <a href="{{ url_for('admin_profile_list_page') }}" type="button" class="saidbar-item text-white btn">
+                        Profile
+                    </a>
+                </div>
+                <div class="btn-group dropright saidbar-item mt-1">
                     <a href="{{ url_for('admin_respublika_list_page') }}" type="button" class="saidbar-item text-white btn">
                         Respublika
                     </a>
@@ -43,7 +53,6 @@ Admin Page
                         Tuman
                     </a>
                 </div>
-                
             </div>
         </div>
     </div>

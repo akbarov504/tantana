@@ -59,25 +59,36 @@ Admin Page
                 <table class="table table-hover w-100" style="background-color: #f2f8ef; color: #52796f;">
                     <tr>
                         <th>#</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Respublika</th>
                         <th>Viloyat</th>
-                        <th>Text</th>
-                        <th>Action
-                            <a href="{{ url_for('admin_tuman_create_page') }}" class="btn ml-5" style="background-color: #52796f; color: #f2f8ef;">Add</a>
-                        </th>
+                        <th>Tuman</th>
+                        <th>Street</th>
+                        <th>Created At</th>
+                        <th>Created By</th>
                     </tr>
-                    {% for tuman in tuman_list %}
+                    {% for profile in profile_list %}
                     <tr>
-                        <th>{{ tuman.id }}</th>
-                        {% for viloyat in viloyat_list %}
-                        {% if viloyat.id == tuman.viloyat_id %}
-                        <td>{{ viloyat.text }}</td>
+                        <th>{{ profile.id }}</th>
+                        <td>{{ profile.title }}</td>
+                        <td>{{ profile.description }}</td>
+                        {% for category in category_list %}
+                        {% if category.id == profile.category_id %}
+                        <td>{{ category.title }}</td>
                         {% endif %}
                         {% endfor %}
-                        <td>{{ tuman.text }}</td>
-                        <td class="d-flex">
-                            <a href="{{ url_for('admin_tuman_update_page', id=tuman.id) }}" class="btn" style="background-color: #52796f; color: #f2f8ef;">Update</a>
-                            <a href="{{ url_for('admin_tuman_delete_page', id=tuman.id) }}" class="btn ml-2" style="background-color: #52796f; color: #f2f8ef;">Delete</a>
-                        </td>
+                        <td>{{ profile.respublika }}</td>
+                        <td>{{ profile.viloyat }}</td>
+                        <td>{{ profile.tuman }}</td>
+                        <td>{{ profile.street }}</td>
+                        <td>{{ profile.created_at }}</td>
+                        {% for user in user_list %}
+                        {% if user.id == profile.created_by %}
+                        <td>{{ user.full_name }}</td>
+                        {% endif %}
+                        {% endfor %}
                     </tr>
                     {% endfor %}
                   </table>

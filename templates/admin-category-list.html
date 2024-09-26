@@ -9,8 +9,13 @@ Admin Page
             <div class="col-lg-3 col-12 saidbar ml-lg-0 ml-0 mt-lg-5 mt-2">
                 
                 <div class="btn-group dropright saidbar-item mt-1">
-                    <a href="{{ url_for('admin_user_list_page') }}" type="button" class="saidbar-item text-white btn">
-                        User
+                    <a href="{{ url_for('admin_client_list_page') }}" type="button" class="saidbar-item text-white btn">
+                        Client
+                    </a>
+                </div>
+                <div class="btn-group dropright saidbar-item mt-1">
+                    <a href="{{ url_for('admin_employee_list_page') }}" type="button" class="saidbar-item text-white btn">
+                        Employee
                     </a>
                 </div>
                 <div class="btn-group dropright saidbar-item mt-1">
@@ -26,6 +31,11 @@ Admin Page
                 <div class="btn-group dropright saidbar-item mt-1">
                     <a href="{{ url_for('admin_category_list_page') }}" type="button" class="saidbar-item text-white btn">
                         Category
+                    </a>
+                </div>
+                <div class="btn-group dropright saidbar-item mt-1">
+                    <a href="{{ url_for('admin_profile_list_page') }}" type="button" class="saidbar-item text-white btn">
+                        Profile
                     </a>
                 </div>
                 <div class="btn-group dropright saidbar-item mt-1">
@@ -51,6 +61,7 @@ Admin Page
                         <th>#</th>
                         <th>Title</th>
                         <th>Description</th>
+                        <th>Order</th>
                         <th>Action
                             <a href="{{ url_for('admin_category_create_page') }}" class="btn ml-5" style="background-color: #52796f; color: #f2f8ef;">Add</a>
                         </th>
@@ -60,6 +71,7 @@ Admin Page
                         <th>{{ category.id }}</th>
                         <td>{{ category.title }}</td>
                         <td>{{ category.description }}</td>
+                        <td>{{ category.order }}</td>
                         <td class="d-flex">
                             <a href="{{ url_for('admin_category_update_page', id=category.id) }}" class="btn" style="background-color: #52796f; color: #f2f8ef;">Update</a>
                             <a href="{{ url_for('admin_category_delete_page', id=category.id) }}" class="btn ml-2" style="background-color: #52796f; color: #f2f8ef;">Delete</a>

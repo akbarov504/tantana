@@ -16,9 +16,11 @@ class User(db.Model, UserMixin):
     
     full_name = db.Column(db.String(length=100), nullable=False)
     phone = db.Column(db.String(length=13), unique=True, nullable=False)
+    type = db.Column(db.String(length=300), nullable=False)
     password = db.Column(db.String(length=300), nullable=False)
     lang = db.Column(db.String(length=2), default="KR")
     role = db.Column(db.String(length=30), default="USER")
+    is_blocked = db.Column(db.Boolean(), default=False)
 
     is_deleted = db.Column(db.Boolean(), default=False)
     created_at = db.Column(db.DateTime(timezone=True), default=datetime.now())
@@ -26,14 +28,16 @@ class User(db.Model, UserMixin):
     updated_at = db.Column(db.DateTime(timezone=True), default=datetime.now())
     updated_by = db.Column(db.Integer(), db.ForeignKey("user.id"))
     
-    def __init__(self, full_name: str, phone: str, password: str, lang: str, role: str, created_by: int) -> None:
+    def __init__(self, full_name: str, phone: str, type: str, password: str, lang: str, role: str, created_by: int) -> None:
         super().__init__()
         self.full_name = full_name
         self.phone = phone
+        self.type = type
         self.password = password
         self.lang = lang
         self.role = role
         self.created_by = created_by
+        self.is_blocked = False
 
     def get_id(self):
         return str(self.id)
@@ -45,6 +49,7 @@ class ProfileCategory(db.Model):
 
     title = db.Column(db.String(length=100), nullable=False)
     description = db.Column(db.String(length=300), nullable=False)
+    order = db.Column(db.Integer(), nullable=False)
 
     is_deleted = db.Column(db.Boolean(), default=False)
     created_at = db.Column(db.DateTime(timezone=True), default=datetime.now())
@@ -52,10 +57,11 @@ class ProfileCategory(db.Model):
     updated_at = db.Column(db.DateTime(timezone=True), default=datetime.now())
     updated_by = db.Column(db.Integer(), db.ForeignKey("user.id"))
     
-    def __init__(self, title: str, description: str, created_by: int) -> None:
+    def __init__(self, title: str, description: str, order: int, created_by: int) -> None:
         super().__init__()
         self.title = title
         self.description = description
+        self.order = order
         self.created_by = created_by
 
     def get_id(self):
@@ -73,6 +79,7 @@ class Profile(db.Model):
     respublika = db.Column(db.String(length=300))
     viloyat = db.Column(db.String(length=300))
     tuman = db.Column(db.String(length=300))
+    street = db.Column(db.String(length=300))
 
     is_deleted = db.Column(db.Boolean(), default=False)
     created_at = db.Column(db.DateTime(timezone=True), default=datetime.now())
@@ -80,14 +87,14 @@ class Profile(db.Model):
     updated_at = db.Column(db.DateTime(timezone=True), default=datetime.now())
     updated_by = db.Column(db.Integer(), db.ForeignKey("user.id"))
     
-    def __init__(self, title: str, description: str, image: str, respublika: str, viloyat: str, tuman: str, category_id: int, created_by: int) -> None:
+    def __init__(self, title: str, description: str, respublika: str, viloyat: str, tuman: str, street: str, category_id: int, created_by: int) -> None:
         super().__init__()
         self.title = title
         self.description = description
-        self.image = image
         self.respublika = respublika
         self.viloyat = viloyat
         self.tuman = tuman
+        self.street = street
         self.category_id = category_id
         self.created_by = created_by
 
@@ -101,6 +108,7 @@ class ProfileImage(db.Model):
 
     image = db.Column(db.String(length=300), nullable=False)
     profile_id = db.Column(db.Integer(), db.ForeignKey("profile.id"))
+    order = db.Column(db.Integer(), nullable=False)
 
     is_deleted = db.Column(db.Boolean(), default=False)
     created_at = db.Column(db.DateTime(timezone=True), default=datetime.now())
@@ -108,11 +116,12 @@ class ProfileImage(db.Model):
     updated_at = db.Column(db.DateTime(timezone=True), default=datetime.now())
     updated_by = db.Column(db.Integer(), db.ForeignKey("user.id"))
     
-    def __init__(self, image: str, profile_id: int, created_by: int) -> None:
+    def __init__(self, image: str, profile_id: int, created_by: int, order: int) -> None:
         super().__init__()
         self.image = image
         self.profile_id = profile_id
         self.created_by = created_by
+        self.order = order
 
     def get_id(self):
         return str(self.id)
